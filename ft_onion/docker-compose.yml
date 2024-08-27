@@ -1,0 +1,26 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx_server
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/index.html:/usr/share/nginx/html/index.html
+    networks:
+      - tor-network
+
+  tor:
+    build: ./tor/.
+    container_name: tor_service
+    ports:
+      - "4242:4242"
+    volumes:
+      - ./tor/torrc:/etc/tor/torrc
+    networks:
+      - tor-network
+      
+networks:
+  tor-network:
+    driver: bridge

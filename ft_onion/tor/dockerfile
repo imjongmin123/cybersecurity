@@ -1,0 +1,15 @@
+FROM debian:11
+
+RUN apt-get update && apt-get upgrade && apt-get install -y tor
+
+RUN apt-get install -y openssh-server
+
+RUN echo 'root:jonim' | chpasswd
+
+COPY sshd_config /etc/ssh/sshd_config
+
+RUN mkdir /var/run/sshd
+
+CMD service ssh start && service tor start && tail -f /dev/null
+
+EXPOSE 80 4242

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Tor 네트워크 다이어그램</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        svg {
+            margin: 20px auto;
+            display: block;
+        }
+
+        text {
+            font-size: 16px;
+            text-anchor: middle;
+            fill: #ffffff;
+            font-weight: bold;
+        }
+
+        .label {
+            font-size: 14px;
+            fill: #000;
+            font-weight: normal;
+        }
+
+        .algorithm {
+            font-size: 12px;
+            fill: #000;
+            text-anchor: middle;
+        }
+
+        .key {
+            fill: #2ecc71;
+            stroke: #333;
+            stroke-width: 2;
+            opacity: 0.8;
+        }
+
+        .cipher {
+            fill: #9b59b6;
+            stroke: #333;
+            stroke-width: 2;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tor 네트워크에서의 패킷 전달 과정</h1>
+    <svg width="900" height="700">
+        <!-- Client -->
+        <circle cx="70" cy="300" r="45" fill="#3498db" />
+        <text x="70" y="305">Client</text>
+
+        <!-- Guard Node -->
+        <circle cx="250" cy="150" r="45" fill="#2ecc71" />
+        <text x="250" y="155">Guard Node</text>
+
+        <!-- Middle Node -->
+        <circle cx="450" cy="300" r="45" fill="#f1c40f" />
+        <text x="450" y="305">Middle Node</text>
+
+        <!-- Exit Node -->
+        <circle cx="330" cy="500" r="45" fill="#e67e22" />
+        <text x="330" y="505">Exit Node</text>
+
+        <!-- Server -->
+        <circle cx="750" cy="300" r="45" fill="#e74c3c" />
+        <text x="750" y="305">Server</text>
+
+        <!-- Arrows and Labels -->
+        <line x1="115" y1="280" x2="210" y2="180" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+
+        <line x1="295" y1="150" x2="405" y2="270" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+
+        <line x1="495" y1="300" x2="380" y2="480" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+
+        <line x1="375" y1="500" x2="705" y2="300" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+
+        <!-- Encryption & Decryption Diagrams -->
+        <!-- Client to Guard Node -->
+        <rect x="5" y="360" width="120" height="40" rx="5" ry="5" fill="#3498db" />
+        <text x="60" y="385" class="algorithm">Client Data</text>
+        <rect x="170" y="230" width="80" height="30" rx="5" ry="5" class="key" />
+        <text x="210" y="250" class="algorithm">RSA 암호화</text>
+
+        <!-- Guard Node to Middle Node -->
+        <rect x="300" y="100" width="120" height="40" rx="5" ry="5" fill="#2ecc71" />
+        <text x="360" y="125" class="algorithm">Encrypted Data</text>
+        <rect x="360" y="190" width="60" height="30" rx="5" ry="5" class="cipher" />
+        <text x="390" y="210" class="algorithm">AES 암호화</text>
+
+        <!-- Middle Node to Exit Node -->
+        <rect x="480" y="230" width="120" height="40" rx="5" ry="5" fill="#f1c40f" />
+        <text x="540" y="255" class="algorithm">AES 암호화된 데이터</text>
+        <rect x="340" y="380" width="80" height="30" rx="5" ry="5" class="key" />
+        <text x="380" y="400" class="algorithm">AES 복호화</text>
+
+        <!-- Exit Node to Server -->
+        <rect x="300" y="550" width="120" height="40" rx="5" ry="5" fill="#e67e22" />
+        <text x="360" y="575" class="algorithm">복호화된 데이터</text>
+        <rect x="550" y="420" width="80" height="30" rx="5" ry="5" fill="#e74c3c" />
+        <text x="590" y="440" class="algorithm">서버에 전달</text>
+
+        <!-- Arrowhead definition -->
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+            </marker>
+        </defs>
+    </svg>
+</body>
+</html>
+
